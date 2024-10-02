@@ -1,0 +1,24 @@
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ignore log files
+*.log
+
+# Ignore environment variables
+.env
+
+# Ignore the android code directory
+android/
+
+# Ignore another folders
+.tmp.driveupload/
+trackyourbudget/
+
+
+# Ignore database
+budget.db
+chat.txt
+main-1.py
+main-0.py
+main-win-geolocation.py
