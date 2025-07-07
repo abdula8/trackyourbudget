@@ -11,6 +11,9 @@ __pycache__/
 # Ignore the android code directory
 android/
 
+# Ignore the private images directory
+private/
+
 # Ignore another folders
 .tmp.driveupload/
 trackyourbudget/
