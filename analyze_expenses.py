@@ -3,15 +3,26 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 from tkinter import messagebox
 import tkinter as tk
+from config import DATABASE_NAME, category_keywords # Import from config
+import logging # Import logging
+
+# Configure logging for analyze_expenses
+logging.basicConfig(filename='budget_app.log', level=logging.ERROR,
+                    format='%(asctime)s:%(levelname)s:%(message)s')
 
 # Connect to SQLite database
-conn = sqlite3.connect('budget.db')
+conn = sqlite3.connect(DATABASE_NAME)
 cursor = conn.cursor()
 
 def analyze_expenses():
     # Fetch all expenses from the database
-    cursor.execute("SELECT description, amount FROM expenses")
-    data = cursor.fetchall()
+    try:
+        cursor.execute("SELECT description, amount FROM expenses")
+        data = cursor.fetchall()
+    except sqlite3.Error as e:
+        logging.error(f"Database error in analyze_expenses: {e}")
+        messagebox.showerror("Database Error", "Could not retrieve expenses for analysis.")
+        return
 
     if not data:
         messagebox.showerror("Error", "No data to analyze!")
@@ -19,22 +30,6 @@ def analyze_expenses():
 
     # Categories dictionary to hold totals
     categories = defaultdict(float)
-
-    # Categories to check against descriptions
-    category_keywords = {
-        'Food': ['food', 'restaurant', 'groceries', 'meal', 'طعام', 'أكل', 'غذاء', 'فطار'],
-        'Drinks': ['drink', 'water', 'coffee', 'beverage', 'juice', 'شرب', 'مشروب', 'قهوة', 'مياه', 'عصير'],
-        'Trans.': ['transport', 'trans', 'bus', 'taxi', 'uber', 'gas', 'car', 'مواصلات', 'توصيلة', 'سيارة', 'عربية'],
-        'Clothes': ['cloth', 'shopping', 'apparel', 'هدوم', 'ملابس', 'تيشيرت', 'كسوة'],
-        'Family': ['family', 'kids', 'school', 'عائلة', 'أسرة', 'اسرة', 'بيت'],
-        'Hygiene': ['hygiene', 'صحة', 'نظافة', 'تنظيف', 'برفيوم', 'عطر'],       
-        'Home': ['House', 'buildings', 'home', "جمعية", "جمعيه", 'الأثاث', 'الاثاث', 'المنزل', 'العزال'],
-        'My Soul': ['روح الروح', 'روحي', 'حبيبتي' 'خطيبتي'],
-        'Charity': ['handout', 'charity', "صدقة", "صدقه"],
-        'Courses': ['course', 'درس', 'كورس'],
-        'New Flat': ['الشقة', 'ايجار', 'إيجار'],
-        'Others': []
-    }
 
     # Categorize expenses
     categorized_expenses = defaultdict(list)  # Stores individual expenses per category
