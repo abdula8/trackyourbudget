@@ -1,4 +1,3 @@
 pip install tkcalendar
 pip install matplotlib
 pip install openpyxl
-pip install geopy
