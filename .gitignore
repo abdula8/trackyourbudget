@@ -1,27 +1,50 @@
 # Ignore Python bytecode
 __pycache__/
 *.py[cod]
-
+build/
+dist/
+old-__pycache__/
+images/
 # Ignore log files
 *.log
-
+anylyz_expenses-test.py
+main-002-old.py
+main-003-old.py
+main-004-old.py
 # Ignore environment variables
 .env
 
 # Ignore the android code directory
 android/
-
 # Ignore the private images directory
 private/
-
 # Ignore another folders
 .tmp.driveupload/
 trackyourbudget/
+files-backup/
+temp02/
+temp02.rar
+temp-02/
+temp-02.rar
+last-used/
 
 
 # Ignore database
 budget.db
 chat.txt
+main.py
+main-Copy.py
 main-1.py
 main-0.py
 main-win-geolocation.py
+main-002-old.py
+main-003-old.py
+main-004-old.py
+main.py
+README-.md
+test_app.py
+anydesk.exe
+budget.db-journal
+budget.db-shm
+budget.db-wal
+custom_categories.json

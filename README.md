@@ -1,111 +1,206 @@
-# trackyourbudget
+# 💰 Budget Calculator
 
-# Monthly Budget Calculator with Expense Analysis
+[![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://python.org)
+[![PyQt5](https://img.shields.io/badge/PyQt5-5.15+-green.svg)](https://pypi.org/project/PyQt5/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)
+[![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://microsoft.com/windows)
 
-![App Screenshot 1](images/001.png)
+> A powerful, user-friendly desktop application for managing personal budgets and tracking expenses with intelligent categorization and comprehensive reporting.
 
-## Overview
+## 🌟 Features
 
-This Python application is designed to help users manage their monthly budgets by recording and analyzing expenses. The program provides features to:
+### 💡 Core Functionality
+- **📊 Expense Tracking** - Add, edit, and delete expenses with detailed descriptions
+- **🏷️ Smart Categorization** - Automatic expense categorization with custom keyword support
+- **📈 Budget Management** - Set monthly budgets with visual progress indicators
+- **🔍 Advanced Filtering** - Filter expenses by date range, category, and search terms
+- **📋 Data Export** - Export data to Excel for further analysis
+- **📊 Analytics** - Comprehensive expense analysis and reporting
 
-- Add expenses with descriptions and amounts
-- Display the total amount spent
-- Analyze expenses using graphical charts
-- Clear the expense database
-- Export expenses to an Excel file (.xlsx)
-- Calculate and display the total expenses for a specific day
+### 🎨 User Experience
+- **🌓 Theme Support** - Dark, Light, and System default themes
+- **🌍 Multi-language** - English and Arabic support
+- **⚡ Performance Optimized** - Fast database operations and smooth UI
+- **💾 Data Persistence** - SQLite database for reliable data storage
+- **🔧 Customizable** - Custom categories and settings
 
-## Features
+### 🛠️ Technical Features
+- **Modern UI** - Built with PyQt5 for native look and feel
+- **Cross-platform** - Windows, macOS, and Linux support
+- **Portable** - Standalone executable with no installation required
+- **Extensible** - Plugin architecture for custom features
+- **Secure** - Local data storage with encryption options
 
-### 1. **Desctiption ares**
-This area is used to write what did you pay for ? 
-also here you need some keywords like:
-'food', 'restaurant', 'groceries', 'meal'
-'drink', 'water', 'coffee', 'beverage', 'juice'
-'transport', 'bus', 'taxi', 'uber', 'gas', 'car'
-'cloth', 'shopping', 'apparel'
-'family', 'kids', 'school'
-'health', 'hygene'
-'House', 'buildings', "جمعية", "جمعيه"
-'handout', 'charity', "صدقة", "صدقه"
-'course', 'درس', 'كورس'
+## 📸 Screenshots
 
+### Main Interface
+![Main Interface](docs/screenshots/main-interface.png)
+*Clean, intuitive interface with expense tracking and budget management*
 
+### Custom Categories
+![Custom Categories](docs/screenshots/custom-categories.png)
+*Manage custom expense categories with keyword-based detection*
 
-### 1. **Add Expense**
+### Analytics Dashboard
+![Analytics](docs/screenshots/analytics.png)
+*Comprehensive expense analysis and reporting*
 
-Users can enter a description of their expense and the amount spent. Once the "Add Expense" button is clicked, the expense is stored in an SQLite database along with the date and time it was added.
-
-![App Screenshot 2](images/002.png)
-
-### 2. **Calculate Total**
-
-The "Calculate Total" button allows users to calculate the total expenses recorded in the database. Additionally, the user can calculate the total expenses for a specific date by selecting the desired date.
-
-![App Screenshot 3](images/003.png)
-![App Screenshot 3](images/003-1.png)
-![App Screenshot 3](images/003-2.png)
-
-### 3. **Analyze Expenses**
-
-The "Analyze Expenses" button generates a bar chart showing the breakdown of expenses by category (e.g., food, drinks, transportation, etc.). The analysis helps users visualize which categories they are spending the most on.
-
-![App Screenshot 4](images/004.png)
-
-### 5. **Export to Excel**
-
-Users can export their expenses to an Excel file (.xlsx) by clicking the "Export to Excel" button. The user will be prompted to choose the file name and save location.
-
-![App Screenshot 6](images/005.png)
-
-### 4. **Clear Database**
-
-A red button labeled "Clear Database" allows users to delete all data from the SQLite database. The app will ask for confirmation before proceeding.
-Yoou can use this button every month to reset your budget
-
-![App Screenshot 5](images/006.png)
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
+- Python 3.7 or higher
+- pip (Python package installer)
 
-Make sure you have the following installed on your machine:
+### Installation
 
-- Python 3.x
-- `tkinter` (usually comes with Python)
-- `openpyxl` (for exporting data to Excel)
-
-You can install `openpyxl` by running:
+#### Option 1: From Source
 ```bash
-pip install openpyxl
+# Clone the repository
+git clone https://github.com/yourusername/budget-calculator.git
+cd budget-calculator
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+python main_qt.py
 ```
 
-### Running the App
+#### Option 2: Pre-built Executable
+1. Download the latest release from [Releases](https://github.com/yourusername/budget-calculator/releases)
+2. Run `BudgetCalculatorSetup.exe`
+3. Follow the installation wizard
 
-1. Clone the repository or download the project files.
-2. Run the `main.py` file:
+#### Option 3: Portable Version
+1. Download the portable version
+2. Extract to your desired location
+3. Run `BudgetCalculator.exe`
+
+## 📖 Usage
+
+### Getting Started
+1. **Set Your Budget** - Enter your monthly budget in the budget field
+2. **Add Expenses** - Click "Add Expense" to record new expenses
+3. **Use Auto-Categorization** - Select "Auto" to automatically categorize expenses
+4. **Create Custom Categories** - Use "Manage Categories" for personalized categories
+5. **Track Progress** - Monitor your spending with visual progress indicators
+
+### Advanced Features
+- **Filter Data** - Use date range, category, and search filters
+- **Export Reports** - Export data to Excel for detailed analysis
+- **Analyze Trends** - Use built-in analytics for spending insights
+- **Customize Themes** - Choose from Dark, Light, or System themes
+
+## 🛠️ Development
+
+### Project Structure
+```
+budget-calculator/
+├── main_qt.py              # Main application
+├── analyze_expenses.py     # Expense analysis module
+├── analyze_expenses_002.py # Excel export module
+├── config.py              # Configuration settings
+├── requirements.txt       # Python dependencies
+├── build.py              # Build automation script
+├── installer.nsi         # NSIS installer script
+├── docs/                 # Documentation
+├── tests/                # Test files
+└── resources/            # Icons and assets
+```
+
+### Setting Up Development Environment
+
+1. **Clone and Setup**
    ```bash
-   python main.py
+   git clone https://github.com/yourusername/budget-calculator.git
+   cd budget-calculator
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
    ```
 
-3. The application window will open, allowing you to start adding and analyzing your expenses.
+2. **Run Tests**
+   ```bash
+   python test_app.py
+   ```
 
-## Files and Structure
+3. **Build Application**
+   ```bash
+   python build.py
+   ```
 
-- `main.py`: The main file containing the user interface and core functions.
-- `analyze_expenses.py`: A separate file handling the expense analysis and chart generation.
-- `budget.db`: SQLite database file where all expenses are stored.
-- `README.md`: This file containing documentation and instructions for the app.
-- `images/`: A folder with screenshots for reference in this `README`.
+### Contributing
 
-## Screenshots
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-Here are some additional screenshots to guide you through the app's interface and functionalities:
+#### Development Workflow
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- **Adding an Expense** ![Add Expense](002.png)
-- **Expense Analysis** ![Expense Analysis](004.png)
-- **Export to Excel** ![Export to Excel](006.png)
+#### Code Style
+- Follow PEP 8 Python style guide
+- Use type hints where appropriate
+- Write comprehensive docstrings
+- Include unit tests for new features
 
-## License
+## 📋 Roadmap
 
-This project is licensed under the MIT License. Feel free to modify and distribute it.
+### Version 2.0 (Planned)
+- [ ] **Cloud Sync** - Synchronize data across devices
+- [ ] **Mobile App** - Companion mobile application
+- [ ] **Advanced Analytics** - Machine learning insights
+- [ ] **Bill Reminders** - Automated bill tracking
+- [ ] **Investment Tracking** - Portfolio management features
+
+### Version 1.1 (Next Release)
+- [ ] **Data Backup** - Automated backup system
+- [ ] **Report Scheduling** - Automated report generation
+- [ ] **Plugin System** - Third-party extensions
+- [ ] **Advanced Filters** - More filtering options
+- [ ] **Keyboard Shortcuts** - Power user features
+
+## 🤝 Contributing
+
+We love contributions! Here's how you can help:
+
+### Ways to Contribute
+- 🐛 **Report Bugs** - Use GitHub Issues
+- 💡 **Suggest Features** - Open feature requests
+- 📝 **Improve Documentation** - Help others understand the code
+- 🔧 **Fix Issues** - Submit pull requests
+- 🌍 **Translations** - Add new language support
+- 🧪 **Testing** - Help test new features
+
+### Development Setup
+See [DEVELOPER.md](DEVELOPER.md) for detailed development instructions.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+
+## 🙏 Acknowledgments
+
+- **PyQt5** - For the excellent GUI framework
+- **SQLite** - For reliable data storage
+- **Matplotlib** - For data visualization
+- **Contributors** - Thank you to all contributors!
+
+## 📞 Support
+
+- **Documentation**: [Wiki](https://github.com/yourusername/budget-calculator/wiki)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/budget-calculator/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/budget-calculator/discussions)
+- **Email**: aabdallah.atef.0x@gmail.com
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/budget-calculator&type=Date)](https://star-history.com/#yourusername/budget-calculator&Date)
+
+---
+
+<div align="center">
+  <strong>Made with ❤️ for better financial management</strong>
+</div>

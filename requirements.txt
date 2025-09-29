@@ -1,3 +1,4 @@
-pip install tkcalendar
-pip install matplotlib
-pip install openpyxl
+matplotlib>=3.5.0
+PyQt5>=5.15.0
+pyinstaller>=5.0.0
+openpyxl>=3.0.0

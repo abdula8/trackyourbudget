@@ -1,0 +1,39 @@
+BUDGET CALCULATOR APPLICATION - END USER LICENSE AGREEMENT
+
+IMPORTANT - READ CAREFULLY: This End User License Agreement ("Agreement") is a legal agreement between you (either an individual or a single entity) and the Budget Calculator Application ("Software") for the software product identified above, which includes computer software and may include associated media, printed materials, and "online" or electronic documentation ("Software").
+
+BY INSTALLING, COPYING, OR OTHERWISE USING THE SOFTWARE, YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT INSTALL OR USE THE SOFTWARE.
+
+1. GRANT OF LICENSE
+The Software is licensed, not sold. This Agreement grants you the following rights:
+- You may install and use the Software on a single computer
+- You may make one backup copy of the Software for archival purposes
+- You may not distribute, rent, lease, or lend the Software
+
+2. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS
+- You may not reverse engineer, decompile, or disassemble the Software
+- You may not modify, adapt, or create derivative works based upon the Software
+- You may not remove or alter any copyright notices or other proprietary rights notices
+- The Software is provided "as is" without warranty of any kind
+
+3. COPYRIGHT
+The Software is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. The Software is licensed, not sold.
+
+4. NO WARRANTIES
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+5. LIMITATION OF LIABILITY
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+6. TERMINATION
+This Agreement is effective until terminated. You may terminate it at any time by destroying the Software together with all copies in any form.
+
+7. GOVERNING LAW
+This Agreement shall be governed by the laws of the jurisdiction in which you reside.
+
+8. ENTIRE AGREEMENT
+This Agreement constitutes the entire agreement between you and the Software regarding the subject matter hereof.
+
+By clicking "I Agree" or by installing the Software, you acknowledge that you have read this Agreement, understand it, and agree to be bound by its terms and conditions.
+
+Version 1.0 - Last Updated: 2024

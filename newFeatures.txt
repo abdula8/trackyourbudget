@@ -1,0 +1,7 @@
+BudgetCalculator:
+	allow user to choose the location of database
+
+Password Manager:
+	mobile app -> to make passwords accessable everywhere
+	database over the network (LAN) then cloud is a paid option
+	export db as with encryption in specific location and import also like that not as csv file plain text as current.
