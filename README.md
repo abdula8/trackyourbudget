@@ -56,7 +56,7 @@
 #### Option 1: From Source
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/budget-calculator.git
+git clone https://github.com/abdula8/trackyourbudget.git
 cd budget-calculator
 
 # Install dependencies
@@ -67,7 +67,7 @@ python main_qt.py
 ```
 
 #### Option 2: Pre-built Executable
-1. Download the latest release from [Releases](https://github.com/yourusername/budget-calculator/releases)
+1. Download the latest release from [Releases](https://github.com/abdula8/trackyourbudget/blob/main/BudgetCalculatorSetup.exe)
 2. Run `BudgetCalculatorSetup.exe`
 3. Follow the installation wizard
 
@@ -112,7 +112,7 @@ budget-calculator/
 
 1. **Clone and Setup**
    ```bash
-   git clone https://github.com/yourusername/budget-calculator.git
+   git clone https://github.com/abdula8/trackyourbudget.git
    cd budget-calculator
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -190,14 +190,14 @@ This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.t
 
 ## 📞 Support
 
-- **Documentation**: [Wiki](https://github.com/yourusername/budget-calculator/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/budget-calculator/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/budget-calculator/discussions)
+- **Documentation**: [Wiki](https://github.com/abdula8/trackyourbudget/wiki)
+- **Issues**: [GitHub Issues](https://github.com/abdula8/trackyourbudget/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/abdula8/trackyourbudget/discussions)
 - **Email**: aabdallah.atef.0x@gmail.com
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/budget-calculator&type=Date)](https://star-history.com/#yourusername/budget-calculator&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=abdula8/trackyourbudget&type=Date)](https://star-history.com/#abdula8/trackyourbudget&Date)
 
 ---
 

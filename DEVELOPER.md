@@ -25,7 +25,7 @@
 ### Quick Setup
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/budget-calculator.git
+git clone https://github.com/abdula8/trackyourbudget.git
 cd budget-calculator
 
 # Create virtual environment
@@ -431,7 +431,7 @@ exe = EXE(
 ```bash
 # Fork the repository on GitHub
 # Clone your fork
-git clone https://github.com/yourusername/budget-calculator.git
+git clone https://github.com/abdula8/trackyourbudget.git
 cd budget-calculator
 
 # Add upstream remote
@@ -619,7 +619,7 @@ pip list | grep -E "(PyQt5|matplotlib|sqlite3)"
 ### Getting Help
 - **GitHub Issues** - Bug reports and feature requests
 - **Discussions** - General questions and community help
-- **Email** - aabdallah.atef.0x@gmail.com
+- **Email** - abdallah.atef.0x@gmail.com
 - **Documentation** - Check this guide and inline comments
 
 ### Reporting Bugs
@@ -635,8 +635,8 @@ pip list | grep -E "(PyQt5|matplotlib|sqlite3)"
 **Join our development community and help make Budget Calculator even better!**
 
 [![Contributing](https://img.shields.io/badge/Contributing-Welcome-green.svg)](CONTRIBUTING.md)
-[![Issues](https://img.shields.io/badge/Issues-Open-blue.svg)](https://github.com/yourusername/budget-calculator/issues)
-[![Discussions](https://img.shields.io/badge/Discussions-Active-orange.svg)](https://github.com/yourusername/budget-calculator/discussions)
+[![Issues](https://img.shields.io/badge/Issues-Open-blue.svg)](https://github.com/abdula8/trackyourbudget/issues)
+[![Discussions](https://img.shields.io/badge/Discussions-Active-orange.svg)](https://github.com/abdula8/trackyourbudget/discussions)
 
 ---
 
