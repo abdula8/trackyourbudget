@@ -2,7 +2,7 @@ import sqlite3
 import logging
 import json
 import os
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
@@ -137,10 +137,23 @@ class SettingsManager:
             self.settings.setValue('date_format', 'yyyy-MM-dd')
         if not self.settings.contains('window_geometry'):
             self.settings.setValue('window_geometry', None)
+        if not self.settings.contains('month_start_day'):
+            self.settings.setValue('month_start_day', 1)  # Default to day 1
     
     def get(self, key, default=None):
         """Get setting value."""
-        return self.settings.value(key, default)
+        # return self.settings.value(key, default)
+        value = self.settings.value(key, default)
+        # Convert string 'true'/'false' to boolean
+        if isinstance(value, str) and value.lower() in ('true', 'false'):
+            return value.lower() == 'true'
+            # Ensure month_start_day is an integer
+        if key == 'month_start_day' and isinstance(value, str):
+            try:
+                return int(value)
+            except ValueError:
+                return default
+        return value
     
     def set(self, key, value):
         """Set setting value."""
@@ -319,6 +332,17 @@ class SettingsDialog(QDialog):
         
         layout.addWidget(date_group)
         
+        # Month start day
+        month_group = QGroupBox("Custom Month Start")
+        month_layout = QFormLayout(month_group)
+
+        self.month_start_day = QSpinBox()
+        self.month_start_day.setRange(1, 28)
+        self.month_start_day.setSuffix(" (day of month)")
+        month_layout.addRow("Month starts on day:", self.month_start_day)
+
+        layout.addWidget(month_group)
+
         # Window behavior
         window_group = QGroupBox("Window")
         window_layout = QVBoxLayout(window_group)
@@ -385,6 +409,7 @@ class SettingsDialog(QDialog):
         self.remember_geometry.setChecked(self.settings.get('remember_geometry', True))
         self.auto_backup.setChecked(self.settings.get('auto_backup', True))
         self.backup_interval.setValue(self.settings.get('backup_interval', 7))
+        self.month_start_day.setValue(self.settings.get('month_start_day', 1))
     
     def accept(self):
         """Save settings and close dialog."""
@@ -403,6 +428,7 @@ class SettingsDialog(QDialog):
         self.settings.set('remember_geometry', self.remember_geometry.isChecked())
         self.settings.set('auto_backup', self.auto_backup.isChecked())
         self.settings.set('backup_interval', self.backup_interval.value())
+        self.settings.set('month_start_day', self.month_start_day.value())
         
         self.settings.save()
         super().accept()
@@ -645,6 +671,8 @@ class BudgetApp(QMainWindow):
         # Initialize settings and theme managers
         self.settings_manager = SettingsManager()
         self.theme_manager = ThemeManager(self.settings_manager)
+
+        self.month_start_day = self.settings_manager.get('month_start_day', 1)
 
         # Optimize database connection
         self.conn = sqlite3.connect(DB_PATH, check_same_thread=False)
@@ -895,6 +923,8 @@ class BudgetApp(QMainWindow):
         """Open settings dialog."""
         dialog = SettingsDialog(self)
         if dialog.exec_() == QDialog.Accepted:
+            # Update month_start_day
+            self.month_start_day = self.settings_manager.get('month_start_day', 1)
             # Apply theme changes if needed
             current_theme = self.settings_manager.get('theme', 'system')
             self.theme_manager.apply_theme(QApplication.instance(), current_theme)
@@ -909,7 +939,11 @@ class BudgetApp(QMainWindow):
                 self.theme_action_group.actions()[1].setChecked(True)
             elif current_theme == 'dark':
                 self.theme_action_group.actions()[2].setChecked(True)
-    
+        # Refresh UI to reflect new month_start_day
+        self._refresh_totals()
+        self._load_month_budget()
+        self._apply_filters()
+        
     def _open_user_guide(self):
         """Open user guide."""
         QMessageBox.information(
@@ -1144,7 +1178,35 @@ class BudgetApp(QMainWindow):
         self.btn_export.clicked.connect(analyze_expenses_002.export_to_excel)
         self.btn_manage_categories.clicked.connect(self._manage_categories)
         self.btn_clear.clicked.connect(self._clear_database)
+    
 
+    def _get_period_start(self, d: date, start_day: int) -> date:
+        """Get the start date of the custom period containing date d."""
+        try:
+            if d.day >= start_day:
+                return d.replace(day=start_day)
+            else:
+                prev_month_end = d.replace(day=1) - timedelta(days=1)
+                return prev_month_end.replace(day=start_day)  # Safe for start_day <= 28
+        except ValueError:
+            # Fallback for invalid day (e.g., Feb 30); use last day of previous month
+            prev_month_end = d.replace(day=1) - timedelta(days=1)
+            return prev_month_end
+
+    def _get_next_period_start(self, d: date, start_day: int) -> date:
+        """Get the start date of the next custom period after date d."""
+        try:
+            if d.day >= start_day:
+                # Move to next calendar month
+                next_month_start = (d.replace(day=1) + timedelta(days=32)).replace(day=1)
+            else:
+                # Current calendar month start
+                next_month_start = d.replace(day=1)
+            return next_month_start.replace(day=start_day)  # Safe for start_day <= 28
+        except ValueError:
+            # Fallback for invalid day
+            next_month_start = (d.replace(day=1) + timedelta(days=32)).replace(day=1)
+            return next_month_start
     # --- Actions -------------------------------------------------------------
     def _add_expense(self) -> None:
         desc = self.txt_description.toPlainText().strip()
@@ -1367,8 +1429,50 @@ class BudgetApp(QMainWindow):
 
     def _refresh_totals(self) -> None:
         # Use a single query to get all totals at once for better performance
-        month_prefix = date.today().strftime('%Y-%m')
-        
+        # month_prefix = date.today().strftime('%Y-%m') # OLD
+        today = date.today()
+        period_start = self._get_period_start(today, self.month_start_day)
+        next_start = self._get_next_period_start(today, self.month_start_day)
+        period_start_str = period_start.strftime('%Y-%m-%d')
+        next_start_str = next_start.strftime('%Y-%m-%d')
+        try:
+            # Total spent (all time)
+            self.cur.execute("SELECT SUM(amount) FROM expenses")
+            total = self.cur.fetchone()[0] or 0.0
+
+            # Monthly total (custom period)
+            self.cur.execute("""
+                SELECT SUM(amount) FROM expenses
+                WHERE date(date) >= ? AND date(date) < ?
+            """, (period_start_str, next_start_str))
+            mtotal = self.cur.fetchone()[0] or 0.0
+
+        except sqlite3.Error as e:
+            logging.error('DB query failed in _refresh_totals: %s', e)
+            total = 0.0
+            mtotal = 0.0
+
+        self.lbl_total.setText(f'Total Spent: ${total:.2f}')
+        self.lbl_month.setText(f'This Month: ${mtotal:.2f}')
+
+        # Budget (use period_start's %Y-%m as key)
+        mkey = period_start.strftime('%Y-%m')
+        try:
+            self.cur.execute('SELECT amount FROM budgets WHERE month = ?', (mkey,))
+            budget = (self.cur.fetchone() or (0.0,))[0]
+        except sqlite3.Error as e:
+            logging.error('DB budget query failed: %s', e)
+            budget = 0.0
+
+        remaining = budget - mtotal
+        self.lbl_remaining.setText(f'Remaining: ${remaining:.2f}')
+
+        # Update progress bar
+        progress_value = 0
+        if budget > 0:
+            progress_value = max(0, min(100, int((mtotal / budget) * 100)))
+        self.progress.setValue(progress_value)
+        '''
         try:
             # Get total and monthly total in one query
             self.cur.execute("""
@@ -1405,18 +1509,50 @@ class BudgetApp(QMainWindow):
         if budget > 0:
             progress_value = max(0, min(100, int((mtotal / budget) * 100)))
         self.progress.setValue(progress_value)
-
+        '''
     def _load_month_budget(self) -> None:
-        mkey = date.today().strftime('%Y-%m')
+        today = date.today()
+        period_start = self._get_period_start(today, self.month_start_day)
+        mkey = period_start.strftime('%Y-%m')
         try:
             self.cur.execute('SELECT amount FROM budgets WHERE month = ?', (mkey,))
             row = self.cur.fetchone()
             self.inp_budget.setText(f"{(row[0] if row else 0.0):.2f}")
-        except sqlite3.Error:
+        except sqlite3.Error as e:
+            logging.error('DB budget load failed: %s', e)
             self.inp_budget.setText('0.0')
         self._refresh_totals()
+        # mkey = date.today().strftime('%Y-%m')
+        # try:
+        #     self.cur.execute('SELECT amount FROM budgets WHERE month = ?', (mkey,))
+        #     row = self.cur.fetchone()
+        #     self.inp_budget.setText(f"{(row[0] if row else 0.0):.2f}")
+        # except sqlite3.Error:
+        #     self.inp_budget.setText('0.0')
+        # self._refresh_totals()
 
     def _save_month_budget(self) -> None:
+        today = date.today()
+        period_start = self._get_period_start(today, self.month_start_day)
+        mkey = period_start.strftime('%Y-%m')
+        try:
+            amount = float(self.inp_budget.text() or '0')
+            if amount < 0:
+                raise ValueError("Budget amount cannot be negative")
+            self.cur.execute(
+                "INSERT INTO budgets(month, amount) VALUES(?, ?) ON CONFLICT(month) DO UPDATE SET amount=excluded.amount",
+                (mkey, amount)
+            )
+            self.conn.commit()
+        except ValueError as e:
+            QMessageBox.critical(self, 'Error', str(e))
+            return
+        except sqlite3.Error as e:
+            logging.error('DB upsert budget failed: %s', e)
+            QMessageBox.critical(self, 'DB Error', str(e))
+            return
+        self._refresh_totals()
+        '''
         mkey = date.today().strftime('%Y-%m')
         try:
             amount = float(self.inp_budget.text() or '0')
@@ -1434,6 +1570,7 @@ class BudgetApp(QMainWindow):
             QMessageBox.critical(self, 'DB Error', str(e))
             return
         self._refresh_totals()
+        '''
 
     def _clear_database(self) -> None:
         if QMessageBox.question(self, 'Clear Database', 'Are you sure? This deletes all data.') != QMessageBox.Yes:

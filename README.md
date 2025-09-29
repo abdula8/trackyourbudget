@@ -22,6 +22,7 @@
 - **🌍 Multi-language** - English and Arabic support
 - **⚡ Performance Optimized** - Fast database operations and smooth UI
 - **💾 Data Persistence** - SQLite database for reliable data storage
+- **📅 Start Month day** - User controls the start day of the month in settings general tab
 - **🔧 Customizable** - Custom categories and settings
 
 ### 🛠️ Technical Features
